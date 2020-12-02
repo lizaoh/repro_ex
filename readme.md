@@ -1,6 +1,6 @@
 # Project Template #
 
-This repository contains a template for my projects.  
+This repository contains an example script and paper file for demonstrating the automatic reproduction stack explained [here](https://data-science-methods.github.io/book/a-tech-stack-for-automatically-reproduced-research.html).  
 
 
 ## Folder Structure ##

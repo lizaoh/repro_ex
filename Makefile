@@ -1,18 +1,25 @@
-PAPER_DIR = paper
-TALK_DIR = talk
-SCRIPTS_WD = scripts
+## Paths
+DATA = data
+SCRIPTS = scripts
+OUT = out
+PAPER = paper
 
-all: pipe talk paper
+## Primary targets: all; (analysis) pipe and paper
+all: pipe paper
 
-paper: 
-	@echo "paper"
-	cd $(PAPER_DIR); $(MAKE)
+## Analysis pipe
+pipe: $(OUT)/02_plot.png
+$(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
+                    $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
 
-talk: 
-	@echo "build talk/slides"
-	cd $(TALK_DIR); $(MAKE)
-	
-pipe: 
-	@echo "pipe"
-	cd $(SCRIPTS_WD); $(MAKE)
-	
+# Exercise for the reader
+# $(DATA)/01_data.Rds: ??
+#	??
+
+paper: $(PAPER)/paper.pdf
+$(PAPER)/paper.pdf: $(PAPER)/paper.md \
+                    $(PAPER)/refs.json \
+                    pipe
+	cd $(PAPER); pandoc paper.md -o paper.pdf --citeproc
+
