@@ -3,12 +3,15 @@ DATA = data
 SCRIPTS = scripts
 OUT = out
 PAPER = paper
+LASTOUT = $(OUT)/02_plot.png  # Last output from the last file of the analysis pipeline
 
 ## Primary targets: all; (analysis) pipe and paper
+.PHONY: all pipe paper clean
 all: pipe paper
 
 ## Analysis pipe
-pipe: $(OUT)/02_plot.png
+pipe: $(LASTOUT)
+
 $(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
                     $(DATA)/01_data.Rds
 	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
@@ -17,9 +20,16 @@ $(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
 # $(DATA)/01_data.Rds: ??
 #	??
 
+## Paper
 paper: $(PAPER)/paper.pdf
 $(PAPER)/paper.pdf: $(PAPER)/paper.md \
                     $(PAPER)/refs.json \
-                    pipe
+                    $(LASTOUT)
 	cd $(PAPER); pandoc paper.md -o paper.pdf --citeproc
 
+
+## Cleaning
+madedata = $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
+made = $(wildcard $(OUT)/*) $(PAPER)/paper.pdf $(madedata)
+clean: $(made)
+	rm $(made)
