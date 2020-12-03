@@ -6,7 +6,7 @@ PAPER = paper
 LASTOUT = $(OUT)/02_plot.png  # Last output from the last file of the analysis pipeline
 
 ## Primary targets: all; (analysis) pipe and paper
-.PHONY: all pipe paper clean
+.PHONY: all pipe paper
 all: pipe paper
 
 ## Analysis pipe
@@ -29,6 +29,7 @@ $(PAPER)/paper.pdf: $(PAPER)/paper.md \
 
 
 ## Cleaning
+.PHONY: clean
 madedata = $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
 made = $(wildcard $(OUT)/*) $(PAPER)/paper.pdf $(madedata)
 clean: $(made)
