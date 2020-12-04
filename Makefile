@@ -1,15 +1,16 @@
 ## Paths
-DATA = data
-SCRIPTS = scripts
-OUT = out
-PAPER = paper
-LASTOUT = $(OUT)/02_plot.png  # Last output from the last file of the analysis pipeline
+DATA := data
+SCRIPTS := scripts
+OUT := out
+PAPER := paper
+LASTOUT := $(OUT)/02_plot.png  # Last output from the last file of the analysis pipeline
 
 ## Primary targets: all; (analysis) pipe and paper
 .PHONY: all pipe paper
 all: pipe paper
 
-## Analysis pipe
+
+## Analysis pipe ----
 pipe: $(LASTOUT)
 
 $(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
@@ -20,7 +21,8 @@ $(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
 # $(DATA)/01_data.Rds: ??
 #	??
 
-## Paper
+
+## Paper ----
 paper: $(PAPER)/paper.pdf
 $(PAPER)/paper.pdf: $(PAPER)/paper.md \
                     $(PAPER)/refs.json \
@@ -28,9 +30,9 @@ $(PAPER)/paper.pdf: $(PAPER)/paper.md \
 	cd $(PAPER); pandoc paper.md -o paper.pdf --citeproc
 
 
-## Cleaning
+## Cleaning ----
 .PHONY: clean
-madedata = $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
-made = $(wildcard $(OUT)/*) $(PAPER)/paper.pdf $(madedata)
+madedata := $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
+made := $(wildcard $(OUT)/*) $(PAPER)/paper.pdf $(madedata)
 clean: $(made)
 	rm $(made)
