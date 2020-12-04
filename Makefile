@@ -33,6 +33,9 @@ $(PAPER)/paper.pdf: $(PAPER)/paper.md \
 ## Cleaning ----
 .PHONY: clean
 madedata := $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
-made := $(wildcard $(OUT)/*) $(PAPER)/paper.pdf $(madedata)
-clean: $(made)
+made := $(wildcard $(OUT)/*) \
+        $(SCRIPTS)/02_analysis.html \
+        $(madedata) \
+        $(PAPER)/paper.pdf        
+clean:
 	rm $(made)
