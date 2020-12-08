@@ -7,3 +7,7 @@ Depends: R (>= 4.0.0)
 Description: 
 License: 
 Imports: 
+  tidyverse,
+  knitr,
+  sessioninfo,
+  rmarkdown
