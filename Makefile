@@ -18,8 +18,9 @@ $(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
 	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
 
 # Exercise for the reader
-# $(DATA)/01_data.Rds: ??
-#	??
+$(DATA)/01_data.Rds: $(SCRIPTS)/01_data.R
+	cd $(SCRIPTS); Rscript 01_data.R
+
 
 
 ## Paper ----

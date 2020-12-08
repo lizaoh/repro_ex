@@ -27,6 +27,9 @@ if (!dir.exists(out_dir)) {
 
 dataf = read_rds(file.path(data_dir, '01_data.Rds'))
 
+## A change (though one that doesn't do anything)
+2+2
+
 #' # Summary table #
 #' `knitr::kable()` supports only very basic formatting.  For fancier options, check out these packages: 
 #' 
@@ -44,7 +47,7 @@ dataf %>%
 #' # Amazing plot #
 #' 
 
-#+ plot
+#+ plot, out.width = "10%"
 ggplot(dataf, aes(x, y)) +
     geom_point()
 
